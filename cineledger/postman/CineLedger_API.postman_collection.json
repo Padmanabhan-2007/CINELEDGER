@@ -1,0 +1,273 @@
+{
+  "info": {
+    "name": "CineLedger Enterprise API",
+    "description": "Postman Collection for CineLedger Box-Office Reconciliation & Cryptographic Audit Engine",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin@cineledger.io\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Login (Analyst)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"analyst@cineledger.io\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Current User (Me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Films",
+      "item": [
+        {
+          "name": "Get All Films",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/films"
+          }
+        },
+        {
+          "name": "Get Film by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/films/1"
+          }
+        },
+        {
+          "name": "Create Film",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Gladiator II: Rome Resurgent\",\n  \"originalTitle\": \"Gladiator II\",\n  \"code\": \"FLM-2026-007\",\n  \"releaseYear\": 2026,\n  \"durationMinutes\": 148,\n  \"language\": \"English\",\n  \"rating\": \"R\",\n  \"genre\": \"Epic Historical Action\",\n  \"posterUrl\": \"https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=800\",\n  \"synopsis\": \"Years after witnessing the death of Maximus, Lucius enters the Colosseum.\",\n  \"distributorId\": 1,\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": "{{baseUrl}}/films"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cinemas",
+      "item": [
+        {
+          "name": "Get All Cinemas",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/cinemas"
+          }
+        },
+        {
+          "name": "Get Cinema by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/cinemas/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reconciliations",
+      "item": [
+        {
+          "name": "Get All Reconciliations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/reconciliations"
+          }
+        },
+        {
+          "name": "Get Reconciliation by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/reconciliations/1"
+          }
+        },
+        {
+          "name": "Execute Reconciliation Run",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/reconciliations/1/run"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settlements",
+      "item": [
+        {
+          "name": "Get All Settlements",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/settlements"
+          }
+        },
+        {
+          "name": "Get Settlement Voucher by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/settlements/1"
+          }
+        },
+        {
+          "name": "Approve Settlement Voucher",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentReference\": \"HDFC-RTGS-99482103\"\n}"
+            },
+            "url": "{{baseUrl}}/settlements/1/approve"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Disputes",
+      "item": [
+        {
+          "name": "Get All Disputes",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/disputes"
+          }
+        },
+        {
+          "name": "Add Dispute Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commentText\": \"Countersigned Schedule B verifies weekend pricing exception rate.\"\n}"
+            },
+            "url": "{{baseUrl}}/disputes/1/comments"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Audit Integrity",
+      "item": [
+        {
+          "name": "Get Full Audit Trail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/audit?all=true"
+          }
+        },
+        {
+          "name": "Verify Cryptographic SHA-256 Chain",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/audit/verify"
+          }
+        },
+        {
+          "name": "Simulate Tamper Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventId\": 1,\n  \"description\": \"TAMPERED_RECORD_PAYLOAD\"\n}"
+            },
+            "url": "{{baseUrl}}/audit/tamper-test"
+          }
+        },
+        {
+          "name": "Restore & Re-anchor Chain",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/audit/restore-chain"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard & Health",
+      "item": [
+        {
+          "name": "Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/dashboard"
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health"
+          }
+        }
+      ]
+    }
+  ]
+}
+

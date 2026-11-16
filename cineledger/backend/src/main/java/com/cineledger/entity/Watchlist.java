@@ -1,0 +1,48 @@
+package com.cineledger.entity;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "user_watchlists", uniqueConstraints = {
+    @UniqueConstraint(name = "uk_user_film_watchlist", columnNames = {"user_id", "film_id"})
+}, indexes = {
+    @Index(name = "idx_watchlist_user", columnList = "user_id"),
+    @Index(name = "idx_watchlist_film", columnList = "film_id")
+})
+public class Watchlist {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @Column(name = "film_id", nullable = false)
+    private Long filmId;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    public Watchlist() {}
+
+    public Watchlist(Long userId, Long filmId) {
+        this.userId = userId;
+        this.filmId = filmId;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
+
+    public Long getFilmId() { return filmId; }
+    public void setFilmId(Long filmId) { this.filmId = filmId; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+}
+

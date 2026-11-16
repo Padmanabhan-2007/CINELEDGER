@@ -1,0 +1,47 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2026-11-06T19:23:20.288+05:30  INFO 24752 --- [cineledger-backend] [           main] com.cineledger.CineLedgerApplication     : Starting CineLedgerApplication using Java 17.0.8.1 with PID 24752 (C:\Users\Karthick Prabhakaran\.gemini\antigravity-ide\scratch\cineledger\backend\target\classes started by Karthick Prabhakaran in C:\Users\Karthick Prabhakaran\.gemini\antigravity-ide\scratch\cineledger)
+2026-11-06T19:23:20.299+05:30 DEBUG 24752 --- [cineledger-backend] [           main] com.cineledger.CineLedgerApplication     : Running with Spring Boot v3.3.4, Spring v6.1.13
+2026-11-06T19:23:20.300+05:30  INFO 24752 --- [cineledger-backend] [           main] com.cineledger.CineLedgerApplication     : The following 1 profile is active: "dev"
+2026-11-06T19:23:21.839+05:30  INFO 24752 --- [cineledger-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-06T19:23:22.017+05:30  INFO 24752 --- [cineledger-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 164 ms. Found 17 JPA repository interfaces.
+2026-11-06T19:23:23.758+05:30  INFO 24752 --- [cineledger-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-11-06T19:23:23.815+05:30  INFO 24752 --- [cineledger-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-06T19:23:23.817+05:30  INFO 24752 --- [cineledger-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2026-11-06T19:23:24.024+05:30  INFO 24752 --- [cineledger-backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-06T19:23:24.035+05:30  INFO 24752 --- [cineledger-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3658 ms
+2026-11-06T19:23:24.130+05:30  INFO 24752 --- [cineledger-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-06T19:23:24.688+05:30  INFO 24752 --- [cineledger-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:cineledger user=SA
+2026-11-06T19:23:24.697+05:30  INFO 24752 --- [cineledger-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-06T19:23:24.715+05:30  INFO 24752 --- [cineledger-backend] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:cineledger'
+2026-11-06T19:23:25.009+05:30 DEBUG 24752 --- [cineledger-backend] [           main] c.c.security.JwtAuthenticationFilter     : Filter 'jwtAuthenticationFilter' configured for use
+2026-11-06T19:23:25.359+05:30  INFO 24752 --- [cineledger-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-06T19:23:25.728+05:30  INFO 24752 --- [cineledger-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-11-06T19:23:25.887+05:30  INFO 24752 --- [cineledger-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-06T19:23:26.466+05:30  INFO 24752 --- [cineledger-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-06T19:23:26.547+05:30  WARN 24752 --- [cineledger-backend] [           main] org.hibernate.dialect.Dialect            : HHH000511: The 2.2.224 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-11-06T19:23:26.554+05:30  WARN 24752 --- [cineledger-backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-11-06T19:23:28.620+05:30  INFO 24752 --- [cineledger-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-06T19:23:28.734+05:30  INFO 24752 --- [cineledger-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-06T19:23:29.477+05:30  INFO 24752 --- [cineledger-backend] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-06T19:23:31.015+05:30  WARN 24752 --- [cineledger-backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-06T19:23:31.077+05:30  WARN 24752 --- [cineledger-backend] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: ddbe341b-e810-4fd9-8d57-b385e864a187
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-11-06T19:23:31.112+05:30  INFO 24752 --- [cineledger-backend] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-11-06T19:23:33.076+05:30  INFO 24752 --- [cineledger-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-11-06T19:23:33.132+05:30  INFO 24752 --- [cineledger-backend] [           main] com.cineledger.CineLedgerApplication     : Started CineLedgerApplication in 13.656 seconds (process running for 14.252)
+2026-11-06T19:23:33.758+05:30  INFO 24752 --- [cineledger-backend] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-06T19:23:33.765+05:30  INFO 24752 --- [cineledger-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-06T19:23:33.768+05:30  INFO 24752 --- [cineledger-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms

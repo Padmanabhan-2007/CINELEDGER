@@ -1,0 +1,7 @@
+transaction_ref,show_date,show_time,screen_name,ticket_category,quantity,unit_price,gross_amount,refund_amount,net_amount,comp_tickets
+TXN-OPP-101,2026-10-10,14:30:00,Screen 1 (IMAX Laser),IMAX,300,650.00,195000.00,0.00,195000.00,0
+TXN-OPP-102,2026-10-11,18:45:00,Screen 1 (IMAX Laser),IMAX,250,650.00,162500.00,0.00,162500.00,0
+TXN-OPP-103,2026-10-12,21:30:00,Screen 2,Standard,280,400.00,112000.00,0.00,112000.00,0
+TXN-OPP-104,2026-10-13,11:00:00,Screen 3,Standard,40,400.00,16000.00,5650.00,10350.00,0
+TXN-OPP-105,2026-10-14,15:00:00,Screen 1 (IMAX Laser),IMAX,200,650.00,130000.00,0.00,130000.00,0
+
