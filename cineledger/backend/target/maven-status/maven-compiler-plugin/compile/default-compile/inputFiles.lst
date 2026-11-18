@@ -6,6 +6,7 @@ C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineled
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\controller\AuditController.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\controller\AuthController.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\controller\CinemaController.java
+C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\controller\CinemaholicAuthController.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\controller\ContractController.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\controller\DashboardController.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\controller\DisputeController.java
@@ -49,6 +50,7 @@ C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineled
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\Booking.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\BookingSeat.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\Cinema.java
+C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\CinemaholicUser.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\Contract.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\ContractVersion.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\Discrepancy.java
@@ -56,6 +58,7 @@ C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineled
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\DisputeComment.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\EvidenceAttachment.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\Film.java
+C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\IndustryUser.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\MovieReview.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\MovieShowtime.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\entity\Organization.java
@@ -79,6 +82,7 @@ C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineled
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\AuditoriumSeatRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\BookingRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\BookingSeatRepository.java
+C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\CinemaholicUserRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\CinemaRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\ContractRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\ContractVersionRepository.java
@@ -87,6 +91,7 @@ C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineled
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\DisputeRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\EvidenceAttachmentRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\FilmRepository.java
+C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\IndustryUserRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\MovieReviewRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\MovieShowtimeRepository.java
 C:\Users\padma\Downloads\cineledger\cineledger\backend\src\main\java\com\cineledger\repository\OrganizationRepository.java

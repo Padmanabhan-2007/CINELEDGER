@@ -223,10 +223,20 @@ export default function AudienceDashboardPage() {
                       <p className="text-xs text-[#817366]">
                         {b.cinemaName} • {b.screenName}
                       </p>
-                      <div className="flex items-center gap-3 text-xs text-[#817366] pt-1">
-                        <span>Show: {b.showDateTime}</span>
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-[#817366] pt-1">
+                        <span className="font-semibold text-[#29211D]">
+                          {b.showDayOfWeek ? `${b.showDayOfWeek}, ${b.showDate || ''} • ${b.showTimeFormatted || b.startTime || ''}` : b.showDateTime}
+                        </span>
                         <span>•</span>
-                        <span>Seats: <strong className="text-[#29211D]">{Array.isArray(b.seats) ? b.seats.join(', ') : b.seats}</strong></span>
+                        <span>Seats: <strong className="text-[#29211D]">{Array.isArray(b.seatCodes) ? b.seatCodes.join(', ') : (Array.isArray(b.seats) ? b.seats.join(', ') : b.seatCodes || b.seats)}</strong></span>
+                        <span>•</span>
+                        <span>Total: <strong className="text-[#10B981]">₹{(b.totalAmount || 0).toFixed(2)}</strong></span>
+                        {b.customerName && (
+                          <>
+                            <span>•</span>
+                            <span>Guest: <strong>{b.customerName}</strong></span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import CinemaPosterScene from '../components/3d/CinemaPosterScene';
 
 export default function CinemaholicLoginPage() {
-  const { login, switchDemoAudience } = useAuth();
+  const { cinemaholicLogin, switchDemoAudience } = useAuth();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('audience@cinemaholic.com');
@@ -18,7 +18,7 @@ export default function CinemaholicLoginPage() {
     setError('');
     setLoading(true);
     try {
-      await login(username, password);
+      await cinemaholicLogin(username, password);
       navigate('/cinemaholic/dashboard');
     } catch (err) {
       setError(err?.message || 'Invalid email or password');

@@ -1,13 +1,11 @@
 package com.cineledger.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public class BookingConfirmRequest {
 
-    @NotBlank(message = "Hold token is required")
     private String holdToken;
 
     @NotNull(message = "Showtime ID is required")
@@ -16,6 +14,9 @@ public class BookingConfirmRequest {
     @NotEmpty(message = "At least one seat must be selected")
     private List<Long> seatIds;
 
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
     private String paymentMethod = "UPI";
     private String paymentReference;
 
@@ -30,10 +31,18 @@ public class BookingConfirmRequest {
     public List<Long> getSeatIds() { return seatIds; }
     public void setSeatIds(List<Long> seatIds) { this.seatIds = seatIds; }
 
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
+
+    public String getCustomerEmail() { return customerEmail; }
+    public void setCustomerEmail(String customerEmail) { this.customerEmail = customerEmail; }
+
+    public String getCustomerPhone() { return customerPhone; }
+    public void setCustomerPhone(String customerPhone) { this.customerPhone = customerPhone; }
+
     public String getPaymentMethod() { return paymentMethod; }
     public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
 
     public String getPaymentReference() { return paymentReference; }
     public void setPaymentReference(String paymentReference) { this.paymentReference = paymentReference; }
 }
-

@@ -217,26 +217,33 @@ export default function Live3DBookingPage() {
     e.preventDefault();
     if (selectedSeats.length === 0) return;
 
+    const effCustomerName = customerName || user?.fullName || 'Aarav Sharma';
+    const effCustomerEmail = customerEmail || user?.email || 'audience@cinemaholic.com';
+    const effCustomerPhone = customerPhone || '+91 98765 43210';
+    const effPaymentMethod = paymentMethod || 'UPI';
+    const effPaymentRef = `UPI-HDFC-${Math.floor(100000 + Math.random() * 900000)}`;
+
     try {
       setIsSubmitting(true);
       const payload = {
         showtimeId: showtime.id,
         seatIds: selectedSeats.map((s) => s.id),
-        holdToken,
-        customerName: customerName || user?.fullName || 'Movie Buff',
-        customerEmail: customerEmail || user?.email || 'guest@cinemaholic.com',
-        customerPhone: customerPhone || '9876543210',
-        paymentMethod,
+        holdToken: holdToken || null,
+        customerName: effCustomerName,
+        customerEmail: effCustomerEmail,
+        customerPhone: effCustomerPhone,
+        paymentMethod: effPaymentMethod,
+        paymentReference: effPaymentRef,
       };
 
       const result = await audienceBookingService.confirmBooking(payload);
 
       // Trigger Confetti Celebration
       confetti({
-        particleCount: 120,
-        spread: 70,
+        particleCount: 140,
+        spread: 80,
         origin: { y: 0.6 },
-        colors: ['#C18C55', '#34D399', '#F4EDE1', '#B8755C'],
+        colors: ['#D4AF37', '#10B981', '#F4EDE1', '#C18C55'],
       });
 
       // Lock the seats as BOOKED immediately upon payment confirmation
@@ -244,19 +251,33 @@ export default function Live3DBookingPage() {
         prev.map((s) => (selectedSeats.some((sel) => sel.id === s.id) ? { ...s, status: 'BOOKED' } : s))
       );
 
-      setConfirmedBooking(
-        result || {
-          bookingReference: `CLG-${Math.floor(100000 + Math.random() * 900000)}`,
-          filmTitle: showtime.filmTitle,
-          cinemaName: showtime.cinemaName,
-          screenName: showtime.screenName,
-          showDateTime: showtime.showDateTime,
-          seats: selectedSeats.map((s) => s.seatCode),
-          totalAmount: grandTotal,
-          qrCode: `CLG-${Date.now()}-CONFIRMED`,
-          posterUrl: showtime.posterUrl,
-        }
-      );
+      const resolvedShowDay = result?.showDayOfWeek || new Date().toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+      const resolvedShowDate = result?.showDate || new Date().toISOString().split('T')[0];
+      const resolvedShowTime = result?.showTimeFormatted || result?.startTime || '07:00 PM';
+
+      setConfirmedBooking({
+        bookingReference: result?.bookingReference || `CNH-2026-${Math.floor(100000 + Math.random() * 900000)}`,
+        filmTitle: result?.filmTitle || showtime.filmTitle,
+        cinemaName: result?.cinemaName || showtime.cinemaName,
+        screenName: result?.screenName || showtime.screenName,
+        screenFormat: result?.screenFormat || showtime.screenFormat,
+        showDateTime: `${resolvedShowDay}, ${resolvedShowDate} • ${resolvedShowTime}`,
+        showDate: resolvedShowDate,
+        showTime: resolvedShowTime,
+        showDayOfWeek: resolvedShowDay,
+        showTimeFormatted: resolvedShowTime,
+        seats: result?.seatCodes || selectedSeats.map((s) => s.seatCode),
+        seatCodes: result?.seatCodes || selectedSeats.map((s) => s.seatCode),
+        totalAmount: result?.totalAmount || grandTotal,
+        qrCode: result?.qrCodeData || result?.bookingReference || `CNH-2026-${Date.now()}-CONFIRMED`,
+        posterUrl: result?.posterUrl || showtime.posterUrl,
+        customerName: result?.customerName || effCustomerName,
+        customerEmail: result?.customerEmail || effCustomerEmail,
+        customerPhone: result?.customerPhone || effCustomerPhone,
+        paymentMethod: result?.paymentMethod || effPaymentMethod,
+        paymentReference: result?.paymentReference || effPaymentRef,
+        status: 'CONFIRMED',
+      });
 
       setIsCheckoutOpen(false);
       setSelectedSeats([]);
@@ -265,20 +286,36 @@ export default function Live3DBookingPage() {
       console.error('Booking confirmation failed:', err);
       // Fallback local booking confirmation for seamless demo
       confetti({
-        particleCount: 100,
-        spread: 60,
+        particleCount: 120,
+        spread: 70,
         origin: { y: 0.6 },
       });
+      const resolvedShowDay = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+      const resolvedShowDate = new Date().toISOString().split('T')[0];
+      const resolvedShowTime = '07:00 PM';
+
       setConfirmedBooking({
-        bookingReference: `CLG-${Math.floor(100000 + Math.random() * 900000)}`,
+        bookingReference: `CNH-2026-${Math.floor(100000 + Math.random() * 900000)}`,
         filmTitle: showtime.filmTitle,
         cinemaName: showtime.cinemaName,
         screenName: showtime.screenName,
-        showDateTime: showtime.showDateTime,
+        screenFormat: showtime.screenFormat,
+        showDateTime: `${resolvedShowDay}, ${resolvedShowDate} • ${resolvedShowTime}`,
+        showDate: resolvedShowDate,
+        showTime: resolvedShowTime,
+        showDayOfWeek: resolvedShowDay,
+        showTimeFormatted: resolvedShowTime,
         seats: selectedSeats.map((s) => s.seatCode),
+        seatCodes: selectedSeats.map((s) => s.seatCode),
         totalAmount: grandTotal,
-        qrCode: `CLG-${Date.now()}`,
+        qrCode: `CNH-2026-${Date.now()}-CONFIRMED`,
         posterUrl: showtime.posterUrl,
+        customerName: effCustomerName,
+        customerEmail: effCustomerEmail,
+        customerPhone: effCustomerPhone,
+        paymentMethod: effPaymentMethod,
+        paymentReference: effPaymentRef,
+        status: 'CONFIRMED',
       });
       setIsCheckoutOpen(false);
       setSelectedSeats([]);

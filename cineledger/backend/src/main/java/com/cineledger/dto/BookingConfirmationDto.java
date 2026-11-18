@@ -20,6 +20,11 @@ public class BookingConfirmationDto {
     private String screenFormat;
     private LocalDate showDate;
     private LocalTime startTime;
+    private String showDayOfWeek; // e.g. "TUESDAY"
+    private String showTimeFormatted; // e.g. "06:45 PM"
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
     private List<String> seatCodes;
     private int seatCount;
     private BigDecimal subtotal;
@@ -31,6 +36,7 @@ public class BookingConfirmationDto {
     private String paymentReference;
     private String qrCodeData;
     private LocalDateTime createdAt;
+    private LocalDateTime confirmedAt;
 
     public BookingConfirmationDto() {}
 
@@ -70,6 +76,21 @@ public class BookingConfirmationDto {
     public LocalTime getStartTime() { return startTime; }
     public void setStartTime(LocalTime startTime) { this.startTime = startTime; }
 
+    public String getShowDayOfWeek() { return showDayOfWeek; }
+    public void setShowDayOfWeek(String showDayOfWeek) { this.showDayOfWeek = showDayOfWeek; }
+
+    public String getShowTimeFormatted() { return showTimeFormatted; }
+    public void setShowTimeFormatted(String showTimeFormatted) { this.showTimeFormatted = showTimeFormatted; }
+
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
+
+    public String getCustomerEmail() { return customerEmail; }
+    public void setCustomerEmail(String customerEmail) { this.customerEmail = customerEmail; }
+
+    public String getCustomerPhone() { return customerPhone; }
+    public void setCustomerPhone(String customerPhone) { this.customerPhone = customerPhone; }
+
     public List<String> getSeatCodes() { return seatCodes; }
     public void setSeatCodes(List<String> seatCodes) { this.seatCodes = seatCodes; }
 
@@ -102,5 +123,7 @@ public class BookingConfirmationDto {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-}
 
+    public LocalDateTime getConfirmedAt() { return confirmedAt; }
+    public void setConfirmedAt(LocalDateTime confirmedAt) { this.confirmedAt = confirmedAt; }
+}

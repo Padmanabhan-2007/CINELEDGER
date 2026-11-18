@@ -75,7 +75,7 @@ async function request(endpoint, options = {}, fallback = null) {
   }
 }
 
-// 1. Auth Service
+// 1. Industry Auth Service
 export const authService = {
   login: (credentials) => request('/auth/login', {
     method: 'POST',
@@ -89,6 +89,19 @@ export const authService = {
     const saved = localStorage.getItem('cineledger_user');
     return saved ? JSON.parse(saved) : null;
   }),
+};
+
+// 1b. Cinemaholic Dedicated Audience Auth Service
+export const cinemaholicAuthService = {
+  login: (credentials) => request('/cinemaholic/auth/login', {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+  }),
+  register: (userData) => request('/cinemaholic/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(userData),
+  }),
+  getAudienceUsers: () => request('/cinemaholic/auth/users', {}, () => []),
 };
 
 // 2. Film Service

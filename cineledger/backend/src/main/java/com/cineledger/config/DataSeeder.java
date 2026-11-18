@@ -13,6 +13,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,8 @@ public class DataSeeder implements CommandLineRunner {
     private final BookingSeatRepository bookingSeatRepository;
     private final MovieReviewRepository movieReviewRepository;
     private final WatchlistRepository watchlistRepository;
+    private final CinemaholicUserRepository cinemaholicUserRepository;
+    private final IndustryUserRepository industryUserRepository;
 
     public DataSeeder(UserRepository userRepository,
                       OrganizationRepository organizationRepository,
@@ -72,7 +75,9 @@ public class DataSeeder implements CommandLineRunner {
                       BookingRepository bookingRepository,
                       BookingSeatRepository bookingSeatRepository,
                       MovieReviewRepository movieReviewRepository,
-                      WatchlistRepository watchlistRepository) {
+                      WatchlistRepository watchlistRepository,
+                      CinemaholicUserRepository cinemaholicUserRepository,
+                      IndustryUserRepository industryUserRepository) {
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;
         this.filmRepository = filmRepository;
@@ -98,6 +103,8 @@ public class DataSeeder implements CommandLineRunner {
         this.bookingSeatRepository = bookingSeatRepository;
         this.movieReviewRepository = movieReviewRepository;
         this.watchlistRepository = watchlistRepository;
+        this.cinemaholicUserRepository = cinemaholicUserRepository;
+        this.industryUserRepository = industryUserRepository;
     }
 
     @Override
@@ -117,13 +124,20 @@ public class DataSeeder implements CommandLineRunner {
         Organization cinepolis = organizationRepository.save(new Organization("Cinepolis India", "EXHIBITOR_CHAIN", "ops@cinepolis.com", "CINEPOLIS"));
         Organization auditFirm = organizationRepository.save(new Organization("Deloitte Media Assurance", "AUDIT_FIRM", "audit@deloitte.com", "DELOITTE"));
 
-        // 2. Seed Users
+        // 2. Seed Base Security Users and Dedicated Industry Users Table
         String defaultHash = passwordEncoder.encode("Password@123");
-        User admin = userRepository.save(new User("admin@cineledger.io", "admin@cineledger.io", defaultHash, "Alexander Vance (Admin)", "ADMIN", wb.getId()));
-        User analyst = userRepository.save(new User("analyst@cineledger.io", "analyst@cineledger.io", defaultHash, "Priya Sharma (Lead Financial Analyst)", "ANALYST", pvr.getId()));
-        User auditor = userRepository.save(new User("auditor@cineledger.io", "auditor@cineledger.io", defaultHash, "Marcus Sterling (Assurance Auditor)", "AUDITOR", auditFirm.getId()));
-        User distRep = userRepository.save(new User("distributor@cineledger.io", "distributor@cineledger.io", defaultHash, "David Chen (WB Distribution VP)", "DISTRIBUTOR", wb.getId()));
-        User exhibRep = userRepository.save(new User("exhibitor@cineledger.io", "exhibitor@cineledger.io", defaultHash, "Kavita Rao (PVR Exhibition GM)", "EXHIBITOR", pvr.getId()));
+        User admin = userRepository.save(new User("admin@cineledger.io", "admin@cineledger.io", defaultHash, "Alexander Vance", "ADMIN", wb.getId()));
+        User analyst = userRepository.save(new User("analyst@cineledger.io", "analyst@cineledger.io", defaultHash, "Priya Sharma", "ANALYST", pvr.getId()));
+        User auditor = userRepository.save(new User("auditor@cineledger.io", "auditor@cineledger.io", defaultHash, "Marcus Sterling", "AUDITOR", auditFirm.getId()));
+        User distRep = userRepository.save(new User("distributor@cineledger.io", "distributor@cineledger.io", defaultHash, "David Chen", "DISTRIBUTOR", wb.getId()));
+        User exhibRep = userRepository.save(new User("exhibitor@cineledger.io", "exhibitor@cineledger.io", defaultHash, "Kavita Rao", "EXHIBITOR", pvr.getId()));
+
+        // Dedicated industry_users table
+        industryUserRepository.save(new IndustryUser("admin@cineledger.io", "Alexander Vance", defaultHash, "ADMIN", wb.getId(), wb.getName(), "VP Theatrical Operations"));
+        industryUserRepository.save(new IndustryUser("analyst@cineledger.io", "Priya Sharma", defaultHash, "ANALYST", pvr.getId(), pvr.getName(), "Lead Financial Reconciliation Analyst"));
+        industryUserRepository.save(new IndustryUser("auditor@cineledger.io", "Marcus Sterling", defaultHash, "AUDITOR", auditFirm.getId(), auditFirm.getName(), "Senior Assurance Auditor"));
+        industryUserRepository.save(new IndustryUser("distributor@cineledger.io", "David Chen", defaultHash, "DISTRIBUTOR", wb.getId(), wb.getName(), "Head of Theatrical Distribution"));
+        industryUserRepository.save(new IndustryUser("exhibitor@cineledger.io", "Kavita Rao", defaultHash, "EXHIBITOR", pvr.getId(), pvr.getName(), "General Manager Exhibition Programming"));
 
         auditService.recordEvent("system", "SYSTEM", "SYSTEM_INITIALIZED", "SYSTEM", 0L, "CineLedger root security and organizations initialized");
 
@@ -454,12 +468,20 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedCinemaholicData() {
-        // Step 1: Ensure Audience Demo User exists
+        // Step 1: Ensure Dedicated cinemaholic_users Table is seeded
         String defaultHash = passwordEncoder.encode("Password@123");
         User audienceUser = userRepository.findByEmail("audience@cinemaholic.com").orElseGet(() -> {
             User u = new User("audience@cinemaholic.com", "audience@cinemaholic.com", defaultHash, "Aarav Sharma", "ROLE_AUDIENCE", null);
             return userRepository.save(u);
         });
+
+        if (cinemaholicUserRepository.count() == 0) {
+            cinemaholicUserRepository.save(new CinemaholicUser("audience@cinemaholic.com", "Aarav Sharma", "+91 98765 43210", defaultHash, "VIP Premiere Club", "IMAX 4K Dual Laser", 850, "Mumbai"));
+            cinemaholicUserRepository.save(new CinemaholicUser("rohan.verma@cinemaholic.com", "Rohan Verma", "+91 98201 54321", defaultHash, "Gold Class Recliner Club", "Dolby Atmos 64ch", 620, "Bengaluru"));
+            cinemaholicUserRepository.save(new CinemaholicUser("priya.k@cinemaholic.com", "Priya K.", "+91 97112 34567", defaultHash, "Director's Cut Royale", "VIP Lounge Recliner", 480, "New Delhi"));
+            cinemaholicUserRepository.save(new CinemaholicUser("ananya.d@cinemaholic.com", "Ananya D.", "+91 99401 23890", defaultHash, "IMAX Laser Enthusiast", "IMAX 4K Dual Laser", 390, "Mumbai"));
+            cinemaholicUserRepository.save(new CinemaholicUser("kabir.m@cinemaholic.com", "Kabir Mehta", "+91 98334 11223", defaultHash, "Cinephile Circle", "4DX Dynamic Motion", 250, "Mumbai"));
+        }
 
         // Step 2: Ensure all 20 Master Films are present
         seedRemainingFilms();
@@ -732,6 +754,10 @@ public class DataSeeder implements CommandLineRunner {
         List<AuditoriumSeat> seats = auditoriumSeatRepository.findByScreenIdAndIsActiveTrueOrderByRowLabelAscSeatNumberAsc(showtime.getScreenId());
         if (seats.size() < 10) return;
 
+        Film film1 = filmRepository.findById(showtime.getFilmId()).orElse(null);
+        Cinema cinema1 = cinemaRepository.findById(showtime.getCinemaId()).orElse(null);
+        Screen screen1 = screenRepository.findById(showtime.getScreenId()).orElse(null);
+
         // Booking 1: Two Recliner Seats
         AuditoriumSeat s1 = seats.get(seats.size() - 5); // Row H
         AuditoriumSeat s2 = seats.get(seats.size() - 6);
@@ -739,7 +765,23 @@ public class DataSeeder implements CommandLineRunner {
         Booking b1 = new Booking();
         b1.setBookingReference("CNH-2026-482910");
         b1.setUserId(audienceUser.getId());
+        b1.setCinemaholicUserId(audienceUser.getId());
+        b1.setCustomerName("Aarav Sharma");
+        b1.setCustomerEmail("audience@cinemaholic.com");
+        b1.setCustomerPhone("+91 98765 43210");
         b1.setShowtimeId(showtime.getId());
+        b1.setFilmId(showtime.getFilmId());
+        b1.setFilmTitle(film1 != null ? film1.getTitle() : "Oppenheimer");
+        b1.setCinemaId(showtime.getCinemaId());
+        b1.setCinemaName(cinema1 != null ? cinema1.getName() : "PVR ICON Phoenix Palladium");
+        b1.setScreenId(showtime.getScreenId());
+        b1.setScreenName(screen1 != null ? screen1.getName() : "Screen 1 (IMAX Laser)");
+        b1.setScreenFormat(showtime.getFormat());
+        b1.setShowDate(showtime.getShowDate());
+        b1.setShowTime(showtime.getShowTime());
+        b1.setShowDayOfWeek(showtime.getShowDate().getDayOfWeek().name());
+        b1.setShowTimeFormatted(showtime.getShowTime().format(DateTimeFormatter.ofPattern("hh:mm a")));
+        b1.setSeatCodes(s1.getSeatCode() + ", " + s2.getSeatCode());
         b1.setSeatCount(2);
         b1.setSubtotal(s1.getPriceModifier().add(s2.getPriceModifier()));
         b1.setGstTax(b1.getSubtotal().multiply(new BigDecimal("0.18")).setScale(2, RoundingMode.HALF_UP));
@@ -748,6 +790,8 @@ public class DataSeeder implements CommandLineRunner {
         b1.setStatus("CONFIRMED");
         b1.setPaymentMethod("UPI");
         b1.setPaymentReference("UPI-HDFC-982104");
+        b1.setCreatedAt(LocalDateTime.now().minusDays(1));
+        b1.setConfirmedAt(LocalDateTime.now().minusDays(1));
         b1.setQrCodeData("CINEMAHOLIC:CNH-2026-482910:" + showtime.getId() + ":" + s1.getSeatCode() + "," + s2.getSeatCode());
         Booking savedB1 = bookingRepository.save(b1);
 
@@ -760,10 +804,30 @@ public class DataSeeder implements CommandLineRunner {
             List<AuditoriumSeat> seats2 = auditoriumSeatRepository.findByScreenIdAndIsActiveTrueOrderByRowLabelAscSeatNumberAsc(showtime2.getScreenId());
             AuditoriumSeat primeSeat = seats2.stream().filter(s -> "PRIME".equals(s.getTier())).findFirst().orElse(seats2.get(20));
 
+            Film film2 = filmRepository.findById(showtime2.getFilmId()).orElse(null);
+            Cinema cinema2 = cinemaRepository.findById(showtime2.getCinemaId()).orElse(null);
+            Screen screen2 = screenRepository.findById(showtime2.getScreenId()).orElse(null);
+
             Booking b2 = new Booking();
             b2.setBookingReference("CNH-2026-731924");
             b2.setUserId(audienceUser.getId());
+            b2.setCinemaholicUserId(audienceUser.getId());
+            b2.setCustomerName("Aarav Sharma");
+            b2.setCustomerEmail("audience@cinemaholic.com");
+            b2.setCustomerPhone("+91 98765 43210");
             b2.setShowtimeId(showtime2.getId());
+            b2.setFilmId(showtime2.getFilmId());
+            b2.setFilmTitle(film2 != null ? film2.getTitle() : "Dune: Part Two");
+            b2.setCinemaId(showtime2.getCinemaId());
+            b2.setCinemaName(cinema2 != null ? cinema2.getName() : "PVR ICON Phoenix Palladium");
+            b2.setScreenId(showtime2.getScreenId());
+            b2.setScreenName(screen2 != null ? screen2.getName() : "Screen 2");
+            b2.setScreenFormat(showtime2.getFormat());
+            b2.setShowDate(showtime2.getShowDate());
+            b2.setShowTime(showtime2.getShowTime());
+            b2.setShowDayOfWeek(showtime2.getShowDate().getDayOfWeek().name());
+            b2.setShowTimeFormatted(showtime2.getShowTime().format(DateTimeFormatter.ofPattern("hh:mm a")));
+            b2.setSeatCodes(primeSeat.getSeatCode());
             b2.setSeatCount(1);
             b2.setSubtotal(primeSeat.getPriceModifier());
             b2.setGstTax(b2.getSubtotal().multiply(new BigDecimal("0.18")).setScale(2, RoundingMode.HALF_UP));
@@ -772,6 +836,8 @@ public class DataSeeder implements CommandLineRunner {
             b2.setStatus("CONFIRMED");
             b2.setPaymentMethod("CARD");
             b2.setPaymentReference("VISA-AUTH-419082");
+            b2.setCreatedAt(LocalDateTime.now().minusHours(5));
+            b2.setConfirmedAt(LocalDateTime.now().minusHours(5));
             b2.setQrCodeData("CINEMAHOLIC:CNH-2026-731924:" + showtime2.getId() + ":" + primeSeat.getSeatCode());
             Booking savedB2 = bookingRepository.save(b2);
 

@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     Optional<Booking> findByBookingReference(String bookingReference);
     List<Booking> findByUserIdOrderByCreatedAtDesc(Long userId);
+    List<Booking> findByCinemaholicUserIdOrderByCreatedAtDesc(Long cinemaholicUserId);
     List<Booking> findByShowtimeId(Long showtimeId);
     List<Booking> findByUserIdAndStatus(Long userId, String status);
     boolean existsByUserIdAndShowtimeIdAndStatus(Long userId, Long showtimeId, String status);

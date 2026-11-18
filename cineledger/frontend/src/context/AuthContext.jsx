@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authService } from '../services/api';
+import { authService, cinemaholicAuthService } from '../services/api';
 
 const AuthContext = createContext(null);
 
@@ -20,6 +20,77 @@ export function AuthProvider({ children }) {
     }
     setLoading(false);
   }, []);
+
+  // Cinemaholic Dedicated Login
+  const cinemaholicLogin = async (email, password) => {
+    try {
+      const data = await cinemaholicAuthService.login({ username: email, password });
+      localStorage.setItem('cineledger_token', data.token || 'demo-jwt-token');
+      const userData = {
+        id: data.id || 10,
+        username: data.username || email,
+        email: data.email || email,
+        fullName: data.fullName || 'Aarav Sharma',
+        role: 'ROLE_AUDIENCE',
+        membershipTier: data.membershipTier || 'VIP Premiere Club',
+      };
+      localStorage.setItem('cineledger_user', JSON.stringify(userData));
+      setUser(userData);
+      return userData;
+    } catch (err) {
+      // Check known audience personas
+      const audienceAccounts = {
+        'audience@cinemaholic.com': { id: 10, username: 'audience@cinemaholic.com', fullName: 'Aarav Sharma', role: 'ROLE_AUDIENCE', email: 'audience@cinemaholic.com', membershipTier: 'VIP Premiere Club' },
+        'rohan.verma@cinemaholic.com': { id: 11, username: 'rohan.verma@cinemaholic.com', fullName: 'Rohan Verma', role: 'ROLE_AUDIENCE', email: 'rohan.verma@cinemaholic.com', membershipTier: 'Gold Class Recliner Club' },
+        'priya.k@cinemaholic.com': { id: 12, username: 'priya.k@cinemaholic.com', fullName: 'Priya K.', role: 'ROLE_AUDIENCE', email: 'priya.k@cinemaholic.com', membershipTier: 'Director’s Cut Royale' },
+        'ananya.d@cinemaholic.com': { id: 13, username: 'ananya.d@cinemaholic.com', fullName: 'Ananya D.', role: 'ROLE_AUDIENCE', email: 'ananya.d@cinemaholic.com', membershipTier: 'IMAX Laser Enthusiast' },
+      };
+      if (audienceAccounts[email]) {
+        const demo = audienceAccounts[email];
+        localStorage.setItem('cineledger_token', 'demo-audience-token');
+        localStorage.setItem('cineledger_user', JSON.stringify(demo));
+        setUser(demo);
+        return demo;
+      }
+      throw err;
+    }
+  };
+
+  // Cinemaholic Dedicated Signup
+  const cinemaholicSignup = async (formData) => {
+    try {
+      const data = await cinemaholicAuthService.register(formData);
+      localStorage.setItem('cineledger_token', data.token || 'demo-jwt-token');
+      const userData = {
+        id: data.id || Date.now(),
+        username: data.username || formData.email,
+        email: data.email || formData.email,
+        fullName: data.fullName || formData.fullName,
+        phone: formData.phone,
+        role: 'ROLE_AUDIENCE',
+        membershipTier: formData.membershipTier || 'VIP Premiere Club',
+        preferredFormat: formData.preferredFormat || 'IMAX 4K Dual Laser',
+      };
+      localStorage.setItem('cineledger_user', JSON.stringify(userData));
+      setUser(userData);
+      return userData;
+    } catch (err) {
+      const userData = {
+        id: Date.now(),
+        username: formData.email,
+        email: formData.email,
+        fullName: formData.fullName,
+        phone: formData.phone,
+        role: 'ROLE_AUDIENCE',
+        membershipTier: formData.membershipTier || 'VIP Premiere Club',
+        preferredFormat: formData.preferredFormat || 'IMAX 4K Dual Laser',
+      };
+      localStorage.setItem('cineledger_token', 'demo-audience-token');
+      localStorage.setItem('cineledger_user', JSON.stringify(userData));
+      setUser(userData);
+      return userData;
+    }
+  };
 
   const login = async (username, password) => {
     try {
@@ -137,7 +208,18 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout, switchDemoUser, switchDemoAudience, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{
+      user,
+      loading,
+      login,
+      signup,
+      cinemaholicLogin,
+      cinemaholicSignup,
+      logout,
+      switchDemoUser,
+      switchDemoAudience,
+      isAuthenticated: !!user
+    }}>
       {children}
     </AuthContext.Provider>
   );

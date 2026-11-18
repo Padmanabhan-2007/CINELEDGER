@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import CinemaPosterScene from '../components/3d/CinemaPosterScene';
 
 export default function CinemaholicSignupPage() {
-  const { signup } = useAuth();
+  const { cinemaholicSignup } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -23,15 +23,13 @@ export default function CinemaholicSignupPage() {
     setError('');
     setLoading(true);
     try {
-      await signup({
-        username: formData.email,
+      await cinemaholicSignup({
         email: formData.email,
         password: formData.password,
         fullName: formData.fullName,
-        role: 'ROLE_AUDIENCE',
-        membershipTier: 'VIP Premiere Club',
         phone: formData.phone,
         preferredFormat: formData.preferredFormat,
+        membershipTier: 'VIP Premiere Club',
       });
       navigate('/cinemaholic/movies');
     } catch (err) {

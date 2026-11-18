@@ -28,11 +28,18 @@ import { cinemaAudio } from '../utils/cinemaAudio';
 const SPRING = { stiffness: 180, damping: 16, mass: 0.5 };
 
 function formatSession(booking) {
+  if (booking.showDayOfWeek && (booking.showDate || booking.showTimeFormatted)) {
+    return {
+      date: `${booking.showDayOfWeek}, ${booking.showDate || 'Today'}`,
+      time: booking.showTimeFormatted || booking.showTime || '06:45 PM',
+      start: booking.showDate && booking.showTime ? new Date(`${booking.showDate}T${booking.showTime}`) : new Date(),
+    };
+  }
   if (booking.showDateTime) {
     const d = new Date(booking.showDateTime);
     if (!Number.isNaN(d.getTime())) {
       return {
-        date: d.toLocaleDateString('en-IN', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }),
+        date: d.toLocaleDateString('en-IN', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' }),
         time: d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }),
         start: d,
       };

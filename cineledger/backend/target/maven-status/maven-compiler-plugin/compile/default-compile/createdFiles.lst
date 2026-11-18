@@ -22,6 +22,7 @@ com\cineledger\dto\RegisterRequest.class
 com\cineledger\controller\PublicReviewController.class
 com\cineledger\controller\HealthController.class
 com\cineledger\controller\PublicShowtimeController.class
+com\cineledger\repository\IndustryUserRepository.class
 com\cineledger\security\JwtAuthenticationFilter.class
 com\cineledger\repository\CinemaRepository.class
 com\cineledger\controller\AudienceWatchlistController.class
@@ -57,16 +58,19 @@ com\cineledger\entity\Discrepancy.class
 com\cineledger\entity\BookingSeat.class
 com\cineledger\CineLedgerApplication.class
 com\cineledger\dto\DisputeCreateRequest.class
+com\cineledger\entity\CinemaholicUser.class
 com\cineledger\exception\BadRequestException.class
 com\cineledger\repository\SettlementLineItemRepository.class
 com\cineledger\repository\SourceReportRepository.class
 com\cineledger\dto\MovieReviewDto.class
+com\cineledger\repository\CinemaholicUserRepository.class
 com\cineledger\repository\SettlementRepository.class
 com\cineledger\repository\AuditEventRepository.class
 com\cineledger\entity\SourceReport.class
 com\cineledger\service\MovieReviewService.class
 com\cineledger\repository\MovieReviewRepository.class
 com\cineledger\dto\AuditoriumLayoutDto.class
+com\cineledger\controller\CinemaholicAuthController.class
 com\cineledger\security\SecurityConfig.class
 com\cineledger\entity\AuditoriumLayout.class
 com\cineledger\exception\GlobalExceptionHandler.class
@@ -103,6 +107,7 @@ com\cineledger\repository\MovieShowtimeRepository.class
 com\cineledger\exception\ResourceNotFoundException.class
 com\cineledger\controller\ReconciliationController.class
 com\cineledger\dto\AuthRequest.class
+com\cineledger\entity\IndustryUser.class
 com\cineledger\dto\FilmDto.class
 com\cineledger\dto\ReviewDistributionDto.class
 com\cineledger\dto\SeatHoldRequest.class
